@@ -1,12 +1,17 @@
 import React from 'react';
 
-function GuessWordForm() {
-  const [guess, setGuess] = React.useState('')
+function GuessWordForm({ handleSubmitGuess }) {
+  const [tentativeGuess, setTentativeGuess] = React.useState('')
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log({ guess })
-    setGuess('')
+    if(tentativeGuess.length !== 5) {
+      window.alert('The word must have exactly 5 characters.')
+      return
+    }
+    handleSubmitGuess(tentativeGuess)
+    console.log({ guess: tentativeGuess })
+    setTentativeGuess('')
   }
 
   return (
@@ -22,10 +27,10 @@ function GuessWordForm() {
         maxLength={5}
         required
         pattern="[a-zA-Z]{5}"
-        value={guess}
+        value={tentativeGuess}
         onChange={(event) => {
           const guessWord = event.target.value.toUpperCase()
-          setGuess(guessWord)
+          setTentativeGuess(guessWord)
         }}
         />
     </form>
